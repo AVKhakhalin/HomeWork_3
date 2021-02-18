@@ -201,12 +201,145 @@ public class MainApp
     public static void task2()
     {
         System.out.println("\nЗАДАНИЕ №2");
-        System.out.println("* Создать массив из слов String[] words = {\"apple\", \"orange\", \"lemon\",\n\"banana\", \"apricot\", \"avocado\", \"broccoli\", \"carrot\", \"cherry\", \"garlic\",\n\"grape\", \"melon\", \"leak\", \"kiwi\", \"mango\", \"mushroom\", \"nut\", \"olive\",\n\"pea\", \"peanut\", \"pear\", \"pepper\", \"pineapple\", \"pumpkin\", \"potato\"}.\nПри запуске программы компьютер загадывает слово, запрашивает ответ\nу пользователя, сравнивает его с загаданным словом и сообщает,\nправильно ли ответил пользователь. Если слово не угадано,\nкомпьютер показывает буквы, которые стоят на своих местах.\napple - загаданное, apricot - ответ игрока ap#############\n(15 символов, чтобы пользователь не мог узнать длину слова).\nДля сравнения двух слов посимвольно можно пользоваться:\nString str = \"apple\"; char a = str.charAt(0); - метод, вернет char,\nкоторый стоит в слове str на первой позиции.\nИграем до тех пор, пока игрок не отгадает слово.\nИспользуем только маленькие буквы.\n\n");
+        System.out.println("* Создать массив из слов String[] words = {\"apple\", \"orange\", \"lemon\",\n\"banana\", \"apricot\", \"avocado\", \"broccoli\", \"carrot\", \"cherry\", \"garlic\",\n\"grape\", \"melon\", \"leak\", \"kiwi\", \"mango\", \"mushroom\", \"nut\", \"olive\",\n\"pea\", \"peanut\", \"pear\", \"pepper\", \"pineapple\", \"pumpkin\", \"potato\"}.\nПри запуске программы компьютер загадывает слово, запрашивает ответ\nу пользователя, сравнивает его с загаданным словом и сообщает,\nправильно ли ответил пользователь. Если слово не угадано,\nкомпьютер показывает буквы, которые стоят на своих местах.\napple - загаданное, apricot - ответ игрока ap#############\n(15 символов, чтобы пользователь не мог узнать длину слова).\nДля сравнения двух слов посимвольно можно пользоваться:\nString str = \"apple\"; char a = str.charAt(0); - метод, вернет char,\nкоторый стоит в слове str на первой позиции.\nИграем до тех пор, пока игрок не отгадает слово.\nИспользуем только маленькие буквы.\n");
+        System.out.println("УТОЧНЕНИЕ: Если игрок открыл все буквы перевода слова, без последней буквы,\nи предложил ошибочный вариант перевода слова, то считается,\nчто он не смог отгадать слово!\n\n");
         System.out.println("РЕШЕНИЕ:\n");
 
+        String[] words = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea", "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"};
+        String[] wordsRus = {"яблоко", "апельсин", "лемон", "банан", "абрикос", "авокадо", "брокколи", "морковь", "вишня", "чеснок", "виноград", "дыня", "протечка", "киви", "манго", "гриб", "орех", "олива", "горох", "арахис", "груша", "перец", "ананас", "тыква", "картофель"};
+        int maxnumberWords = 25;
+
+        int numberWords = -1;
+        while(true)
+        {
+            System.out.print("Введите количество английских слов для отгадывания (не более 25): ");
+            if (scanner.hasNextInt())
+            {
+                numberWords = scanner.nextInt();
+                if ((numberWords > 0) && (numberWords <= maxnumberWords))
+                {
+                    break;
+                }
+                else
+                {
+                    System.out.print("Нужно ввести число от 1 до 25 включительно. Попробуйте ещё раз.\n");
+                }
+            }
+            else
+            {
+                System.out.print("Нужно ввести число от 1 до 25 включительно. Попробуйте ещё раз.\n");
+                scanner.next();
+            }
+        }
+
+        int numberCorrectAnswers = 0;
+
+        Random rand = new Random ();
+        int newRand;
+        int[] showOrder = new int[maxnumberWords];
+        boolean exitLoop;
+        String answerWord;
+        newRand = rand.nextInt(maxnumberWords);
+        showOrder[0] = newRand;
+        for (int i = 1; i < numberWords; i++)
+        {
+            exitLoop = false;
+            while(exitLoop == false)
+            {
+                newRand = rand.nextInt(maxnumberWords);
+                exitLoop = true;
+                for (int j = 0; j < i; j++)
+                {
+                    if (showOrder[j] == newRand)
+                    {
+                        exitLoop = false;
+                        break;
+                    }
+                }
+            }
+            showOrder[i] = newRand;
+        }
+
+        for (int i = 0; i < numberWords; i++)
+        {
+            clrScreen();
+            System.out.println("\nЗАДАНИЕ №2");
+            System.out.println("* Создать массив из слов String[] words = {\"apple\", \"orange\", \"lemon\",\n\"banana\", \"apricot\", \"avocado\", \"broccoli\", \"carrot\", \"cherry\", \"garlic\",\n\"grape\", \"melon\", \"leak\", \"kiwi\", \"mango\", \"mushroom\", \"nut\", \"olive\",\n\"pea\", \"peanut\", \"pear\", \"pepper\", \"pineapple\", \"pumpkin\", \"potato\"}.\nПри запуске программы компьютер загадывает слово, запрашивает ответ\nу пользователя, сравнивает его с загаданным словом и сообщает,\nправильно ли ответил пользователь. Если слово не угадано,\nкомпьютер показывает буквы, которые стоят на своих местах.\napple - загаданное, apricot - ответ игрока ap#############\n(15 символов, чтобы пользователь не мог узнать длину слова).\nДля сравнения двух слов посимвольно можно пользоваться:\nString str = \"apple\"; char a = str.charAt(0); - метод, вернет char,\nкоторый стоит в слове str на первой позиции.\nИграем до тех пор, пока игрок не отгадает слово.\nИспользуем только маленькие буквы.\n");
+            System.out.println("УТОЧНЕНИЕ: Если игрок открыл все буквы перевода слова, без последней буквы,\nи предложил ошибочный вариант перевода слова, то считается,\nчто он не смог отгадать слово!\n\n");
+            System.out.println("РЕШЕНИЕ:");
+            System.out.print("\nНапишите, как пишется слово \"" + wordsRus[showOrder[i]] + "\" по-английски? ");
+            if (i == 0)
+            {
+                scanner.nextLine();
+            }
+            answerWord = scanner.nextLine();
+            for (int j = 0; j < words[showOrder[i]].length(); j++)
+            {
+                if (answerWord.toLowerCase().equals(words[showOrder[i]]) == true)
+                {
+                    numberCorrectAnswers++;
+                    System.out.println("\n                          П Р А В И Л Ь Н О!\n");
+                    if (i < numberWords - 1)
+                    {
+                        System.out.print("Нажмите клавишу Enter для продолжения...");
+                        scanner.nextLine();
+                    }
+                    break;
+                }
+                else
+                {
+                    if (j == words[showOrder[i]].length() - 1)
+                    {
+                        System.out.print("\nВы НЕ СМОГЛИ ВСПОМНИТЬ перевод слова " + wordsRus[showOrder[i]].toUpperCase() + ".\n\n                          О Т В Е Т: ");
+                    }
+                    else
+                    {
+                        System.out.print("Нет. Подсказка: ");
+                    }
+                    for (int k = 0; k < 15; k++)
+                    {
+                        if ((k <= j) && (k < words[showOrder[i]].length()))
+                        {
+                            if (j == words[showOrder[i]].length() - 1)
+                            {
+                                System.out.print(words[showOrder[i]].toUpperCase().charAt(k));
+                            }
+                            else
+                            {
+                                System.out.print(words[showOrder[i]].charAt(k));
+                            }
+                            if ((j == words[showOrder[i]].length() - 1) && (k == words[showOrder[i]].length() - 1))
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            System.out.print("*");
+                        }
+                    }
+                    if ((j == words[showOrder[i]].length() - 1) && (i != numberWords - 1))
+                    {
+                        System.out.print("\n\nНажмите клавишу Enter для продолжения...");
+                        scanner.nextLine();
+                    }
+                }
+                if (j != words[showOrder[i]].length() - 1)
+                {
+                    System.out.print("\n\nПопробуйте вспомнить английский перевод слова " + wordsRus[showOrder[i]] + " ещё раз: ");
+                    answerWord = scanner.nextLine();
+                }
+            }
+        }
+        System.out.print("Вы правильно перевели " + numberCorrectAnswers + " ");
+        endWords1(numberCorrectAnswers);
+        System.out.print(" из " + numberWords + " ");
+        endWords2(numberWords);
+        System.out.print(".\n\n");
     }
     //endregion
 
+    //region Общие методы
     //region Метод очистки консольного окна
     public static void clrScreen() // Очистка консольного окна
     {
@@ -218,6 +351,38 @@ public class MainApp
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex)
         {
+        }
+    }
+    //endregion
+
+    //region Корректировка окончания слов 1
+    public static void endWords1(int number)
+    {
+        if ((number != 11) && (number % 10 == 1))
+        {
+            System.out.print("слово");
+        }
+        else if ((number != 12) && (number != 13) && (number != 14) && ((number % 10 == 2) || (number % 10 == 3) || (number % 10 == 4)))
+        {
+            System.out.print("слова");
+        }
+        else
+        {
+            System.out.print("слов");
+        }
+    }
+    //endregion
+
+    //region Корректировка окончания слов 2
+    public static void endWords2(int number)
+    {
+        if ((number != 11) && (number % 10 == 1))
+        {
+            System.out.print("слова");
+        }
+        else
+        {
+            System.out.print("слов");
         }
     }
     //endregion
