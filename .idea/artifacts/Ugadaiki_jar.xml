@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Ugadaiki:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Ugadaiki_jar</output-path>
+    <root id="archive" name="Ugadaiki.jar">
+      <element id="module-output" name="Ugadaiki" />
+    </root>
+  </artifact>
+</component>
