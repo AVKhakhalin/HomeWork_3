@@ -2,7 +2,7 @@ package Ugadaiki;
 
 import java.io.IOException; // Объявление утилиты, для использования метода очистки окна в консоли
 import java.util.Scanner; // Объявление утилиты для использования ввода информации в консоль
-import java.lang.Object;
+import java.util.Random;
 
 
 public class MainApp
@@ -20,7 +20,7 @@ public class MainApp
 
         while (true)
         {
-            if (numberTask != -1)
+            if ((numberTask != -1) && (errInput == false))
             {
                 firstShow = false;
             }
@@ -41,16 +41,9 @@ public class MainApp
             }
             System.out.print("\nУкажите НОМЕР ЗАДАЧИ для проверки (0 - для ВЫХОДА из программы): ");
 
-            if (scanner.hasNextInt() || scanner.hasNextFloat())
+            if (scanner.hasNextInt())
             {
-                if (scanner.hasNextInt())
-                {
-                    numberTask = Math.abs(scanner.nextInt());
-                }
-                else
-                {
-                    numberTask = Math.abs(Math.round(scanner.nextFloat()));
-                }
+                numberTask = scanner.nextInt();
 
                 switch (numberTask)
                 {
@@ -94,6 +87,112 @@ public class MainApp
         System.out.println("Написать программу, которая загадывает случайное число от 0 до 9\nи пользователю дается 3 попытки  угадать это число.\nПри каждой попытке компьютер должен сообщить,\nбольше ли указанное пользователем число, чем загаданное, или меньше.\nПосле победы или проигрыша выводится запрос -\n\"Повторить игру еще раз? 1 - да / 0 - нет\"\n(1 - повторить, 0 - нет).\n\n");
         System.out.println("РЕШЕНИЕ:\n");
 
+        Random rand = new Random ();
+        int number;
+        int answerNumber;
+        int caseAnswer = 1;
+        boolean errorInput = false;
+
+        number = rand.nextInt( 9 );
+        while(true)
+        {
+            System.out.println("Попробуйте угадать загаданное число от 0 до 9 за 3 попытки. Удачи!");
+            while (true)
+            {
+                if (errorInput == true)
+                {
+                    System.out.print("\nЗагаданное число (введите число от 0 до 9 без точки) = ");
+                }
+                else
+                {
+                    System.out.print("\nПОПЫТКА №" + caseAnswer + "\nЗагаданное число (введите число от 0 до 9 без точки) = ");
+                }
+                if (scanner.hasNextInt())
+                {
+                    answerNumber = scanner.nextInt();
+
+                    if ((answerNumber >= 0) && (answerNumber <= 9))
+                    {
+                        if (answerNumber == number)
+                        {
+                            errorInput = false;
+                            if (caseAnswer == 1)
+                            {
+                                System.out.println("\nВЫ ОТГАДАЛИ С 1 ПОПЫТКИ! НАВЕРНОЕ, ВЫ ПРОВИДЕЦ 100-ГО УРОВНЯ.\n");
+                            }
+                            else
+                            {
+                                System.out.println("\nПОЗДРАВЛЯЮ! ВЫ УГАДАЛИ!\n");
+                            }
+                            caseAnswer = 1;
+                            break;
+                        }
+                        else
+                        {
+                            caseAnswer++;
+                            errorInput = false;
+                            if (answerNumber > number)
+                            {
+                                System.out.println("Нет. Загаданное число МЕНЬШЕ Вашего числа.");
+                            }
+                            else
+                            {
+                                System.out.println("Нет. Загаданное число БОЛЬШЕ Вашего числа.");
+                            }
+                            if (caseAnswer > 3)
+                            {
+                                System.out.println("\nВам НЕ УДАЛОСЬ ОТДГАДАТЬ число " + number + ". Исчерпаны все попытки.\n");
+                                caseAnswer = 1;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        errorInput = true;
+                        System.out.println("Нужно вводить только цифры от 0 до 9. Попробуйте ещё раз.");
+                    }
+                }
+                else
+                {
+                    errorInput = true;
+                    System.out.println("Нужно вводить только цифры от 0 до 9. Попробуйте ещё раз.");
+                    scanner.next();
+                }
+            }
+            answerNumber = -1;
+            while ((answerNumber != 1) && (answerNumber != 0))
+            {
+                System.out.print("Повторить игру еще раз? (1 - да / 0 - нет): ");
+                if (scanner.hasNextInt())
+                {
+                    answerNumber = scanner.nextInt();
+
+                    if ((answerNumber != 0) && (answerNumber != 1))
+                    {
+                        System.out.println("Нужно вводить только цифры 0 и 1. Попробуйте ещё раз.\n");
+                    }
+                }
+                else
+                {
+                    System.out.println("Нужно вводить только цифры от 0 до 1. Попробуйте ещё раз.\n");
+                    scanner.next();
+                }
+            }
+            if (answerNumber == 0)
+            {
+                System.out.println("\n\nСпасибо Вам за игру!");
+                break;
+            }
+            else
+            {
+                clrScreen();
+                System.out.println("\nЗАДАНИЕ №1");
+                System.out.println("Написать программу, которая загадывает случайное число от 0 до 9\nи пользователю дается 3 попытки  угадать это число.\nПри каждой попытке компьютер должен сообщить,\nбольше ли указанное пользователем число, чем загаданное, или меньше.\nПосле победы или проигрыша выводится запрос -\n\"Повторить игру еще раз? 1 - да / 0 - нет\"\n(1 - повторить, 0 - нет).\n\n");
+                System.out.println("РЕШЕНИЕ:\n");
+                number = rand.nextInt( 9 );
+            }
+        }
     }
     //endregion
 
